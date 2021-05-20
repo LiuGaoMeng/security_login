@@ -1,6 +1,8 @@
 package com.augurit.water.monitorpro.config;
 
+import com.augurit.water.monitorpro.login.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
@@ -10,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -27,23 +28,32 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 public class SsoSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserServiceImpl userService;
     @Bean
     PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();
     }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("root").password("123").roles("ADMIN", "DBA")
-                .and()
-                .withUser("admin").password("123").roles("ADMIN", "USER")
-                .and()
-                .withUser("augurit").password("123").roles("USER");
+        auth.userDetailsService(userService);
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
                 http
-                .formLogin().loginPage("/login.html").loginProcessingUrl("/user/login")
+                        .authorizeRequests()
+                        .antMatchers("/login").permitAll()
+                .antMatchers("/css/**","/js/**","/lib/**","/user/**").permitAll()
+                .antMatchers("/**").access("hasAnyRole('ADMIN', 'USER')")
+                .anyRequest()
+                 .authenticated()
+                .and()
+                        .formLogin().loginPage("/login.html")
+                        .loginProcessingUrl("/login")
+//                        .defaultSuccessUrl("/main/main.html",true)
+//                        .failureUrl("/login.html")
                         .successHandler(new AuthenticationSuccessHandler() {//登录成功处理逻辑
                             @Override
                             public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -53,11 +63,14 @@ public class SsoSecurityConfig extends WebSecurityConfigurerAdapter {
                                 httpServletResponse.setStatus(200);
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("status", 200);
-                                map.put("msg", principal);
+                                map.put("msg", "登录成功！");
                                 ObjectMapper om = new ObjectMapper();
                                 out.write(om.writeValueAsString(map));
                                 out.flush();
                                 out.close();
+//                                httpServletResponse.sendRedirect("/main/main.html");
+//                                httpServletRequest.getRequestDispatcher("/main/main.html")
+//                                        .forward(httpServletRequest,httpServletResponse);
                             }
                         })
                         .failureHandler(new AuthenticationFailureHandler() {//登录失败处理逻辑
@@ -85,16 +98,9 @@ public class SsoSecurityConfig extends WebSecurityConfigurerAdapter {
                                 out.write(om.writeValueAsString(map));
                                 out.flush();
                                 out.close();
+//                                httpServletResponse.sendRedirect("/login.html");
                             }
-                        }).permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/moni/**").access("hasIpAddress('192.168.30.128') or hasIpAddress('127.0.0.1')or hasIpAddress('192.168.31.7') or hasAnyRole('ADMIN', 'USER')")
-//                .antMatchers("/moni/getServiceMess").access("hasAnyRole('ADMIN', 'USER') or hasIpAddress('localhost')" )
-                .anyRequest()
-                 .authenticated()
-                .and()
-                .csrf()
-                .disable();
+                        })
+                        .permitAll();
     }
 }

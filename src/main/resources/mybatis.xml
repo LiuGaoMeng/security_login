@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+		PUBLIC "-//mybatis.org//D/EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<properties>
+
+	</properties>
+	<settings>
+		<!-- xml配置对于NULL值默认作为字符串来处理 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="logImpl" value="LOG4J"/>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="cacheEnabled" value="true"></setting> <!--开启使用缓存-->
+	</settings>
+	<typeAliases>
+	</typeAliases>
+
+	<plugins>
+		<!--<plugin interceptor="com.github.pagehelper.PageHelper">-->
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!--<property name="dialect" value="oracle"/>-->
+			<!--<property name="helperDialect" value="oracle"/>-->
+			<property name="offsetAsPageNum" value="true"/>
+			<property name="rowBoundsWithCount" value="true"/>
+			<property name="pageSizeZero" value="true"/>    <!--true表示 pageSize=0时候，返回全部-->
+		</plugin>
+	</plugins>
+
+	<mappers>
+		<package name="com.augurit.water.*.mapper"/>
+	</mappers>
+
+</configuration>

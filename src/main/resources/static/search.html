@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Create a 2D map</title>
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .content {
+      border-radius: 10px;
+      border: 1px solid #ced4da;
+      position: absolute;
+      top: 15px;
+      left: 80px;
+      width: 200px;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .input-warp {
+      width: 150px;
+      margin: 10px 25px;
+    }
+
+    .input-warp>input {
+      margin: 5px 0px 0px 0px;
+      width: 50px;
+      display: inline-block;
+      height: 20px;
+    }
+
+    #execute {
+      margin-bottom: 15px;
+    }
+
+    .legend {
+      display: none;
+      position: absolute;
+      bottom: 25px;
+      left: 100px;
+      background: #fff;
+      height: 160px;
+      width: 120px;
+      border-radius: 10px;
+      border: 1px solid #ced4da;
+    }
+
+    .level {
+      width: 25px;
+      height: 15px;
+      display: inline-block;
+      margin: 5px 20px 0px 20px;
+    }
+
+    span {
+      font-size: 14px;
+    }
+  </style>
+  <!-- 新 Bootstrap4 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+  <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="http://192.168.30.147/arcgis_api_418/esri/themes/light/main.css" />
+  <script type="text/javascript" src="http://192.168.30.147/arcgis_api_418/init.js"></script>
+  <script>
+    let url="http://192.168.30.147/arcgis_api_418/";
+    require([
+              "dojo/on",
+              "dojo/dom",
+              "esri/Map",
+              "esri/views/MapView",
+              "esri/layers/MapImageLayer",
+              "esri/layers/WebTileLayer",
+              "esri/tasks/QueryTask",
+              "esri/tasks/support/Query",
+              "esri/tasks/support/RasterData",
+              "esri/tasks/Geoprocessor",],
+            function (on, dom, Map, MapView,MapImageLayer, WebTileLayer, QueryTask,Query,RasterData, Geoprocessor) {
+              // let layerDT = new WebTileLayer({
+              //   name: "天地图底图",
+              //   urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+              // })
+              // let layerZJ = new WebTileLayer({
+              //   name: "天地图注记",
+              //   urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+              // })
+              let layer = new MapImageLayer({
+                url: "https://192.168.30.147:6443/arcgis/rest/services/diggingg/diggings/MapServer"
+              });
+
+              let map = new Map({
+                layers: [layer]
+              });
+
+              var view = new MapView({
+                container: 'viewDiv',
+                map: map,
+                zoom: 10,
+                center: [118.703581, 40.003963]
+              });
+              var queryTask = new QueryTask({
+                url: "https://192.168.30.147:6443/arcgis/rest/services/diggingg/diggings/MapServer/1"
+              });
+              var query = new Query();
+              query.returnGeometry = true;
+              query.outFields = ["*"];
+              query.where = "Name='迁西县'";
+
+              queryTask.execute(query).then(function(results){
+                console.log(results.features);
+              });
+            });
+  </script>
+</head>
+
+<body>
+<div id="viewDiv"></div>
+<div class="content">
+  <div class="input-warp">
+    <span>图层一权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+    <span>图层二权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+    <span>图层三权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+    <span>图层四权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+    <span>图层五权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+    <span>图层六权重：</span><input type="text" class="form-control" placeholder="请输入权重" value="0.2">
+  </div>
+  <button id="execute" type="button" class="btn btn-outline-primary btn-sm">执行</button>
+</div>
+<div class="legend">
+  <div class="legend-title" style="text-align: center;">图例</div>
+  <div class="legend-warp">
+    <div><span class="level" style="background-color: #FF0000;"></span><span>差</span></div>
+    <div><span class="level" style="background-color: #FF7F50;"></span><span>较差</span></div>
+    <div><span class="level" style="background-color: #FFFF00;"></span><span>一般</span></div>
+    <div><span class="level" style="background-color: #90EE90;"></span><span>良</span></div>
+    <div><span class="level" style="background-color: #00FF00;"></span><span>优</span></div>
+  </div>
+</div>
+</body>
+
+</html>

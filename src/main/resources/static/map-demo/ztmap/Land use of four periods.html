@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>近20年土地利用对比</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+    <script>
+        require(["esri/Map", "esri/views/MapView", "esri/layers/MapImageLayer"],
+            function(Map, MapView, MapImageLayer) {
+                var layer = new MapImageLayer({
+                    url: "http://localhost:6080/arcgis/rest/services/tudiliyong/sigeshilanduse/MapServer",
+                    sublayers: [{
+                        id: 2,
+                        visible: false
+                    }, {
+                        id: 4,
+                        visible: false
+                    }, {
+                        id: 1,
+                        visible: false
+                    }, {
+                        id: 0,
+                        visible: false
+                    }]
+                });
+                var map = new Map({
+                    basemap: "dark-gray-vector",
+                    layers: [layer]
+                });
+
+                var view = new MapView({
+                    container: "viewDiv",
+                    map: map,
+                    zoom: 8,
+                    center: [118.7, 40.02],
+
+                });
+
+                layer.when(function() {
+                    layer.sublayers.map(function(sublayer) {
+                        var id = sublayer.id;
+                        var visible = sublayer.visible;
+                        var node = document.querySelector(".sublayers-item[data-id='" + id + "']");
+                        if (visible) {
+                            node.classList.add("visible-layer");
+                        }
+                    });
+                });
+
+
+                var sublayersElement = document.querySelector(".sublayers");
+                sublayersElement.addEventListener("click", function(event) {
+                    var id = event.target.getAttribute("data-id");
+                    if (id) {
+                        var sublayer = layer.findSublayerById(parseInt(id));
+                        var node = document.querySelector(".sublayers-item[data-id='" + id + "']");
+                        sublayer.visible = !sublayer.visible;
+                        node.classList.toggle("visible-layer");
+                    }
+                });
+            });
+    </script>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        /* #viewDiv {
+            position: absolute;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 60px;
+        } */
+        
+        .footer {
+            position: absolute;
+            bottom: 0;
+            height: 60px;
+            width: 100%;
+        }
+        
+        .sublayers {
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+        
+        .sublayers-item {
+            flex-grow: 4;
+            background-color: rgba(34, 111, 14, 0.5);
+            color: #fff;
+            margin: 1px;
+            width: 50%;
+            padding: 20px;
+            overflow: auto;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .visible-layer {
+            color: #fff;
+            background-color: #226f0e;
+        }
+        
+        .legend {
+            display: none;
+            position: absolute;
+            bottom: 25px;
+            left: 100px;
+            background: #fff;
+            height: 160px;
+            width: 120px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        
+        .level {
+            width: 25px;
+            height: 15px;
+            display: inline-block;
+            margin: 5px 20px 0px 20px;
+        }
+        
+        span {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="viewDiv">
+        <!-- <div><img src="../introduction/images/土壤.jpg"></div> -->
+
+    </div>
+
+    <div class="footer">
+        <div class="sublayers esri-widget">
+            <div class="sublayers-item" data-id="0">2000年</div>
+            <div class="sublayers-item" data-id="1">2009年</div>
+            <!-- <div class="sublayers-item" data-id="4">Railroads2000年</div> -->
+            <div class="sublayers-item" data-id="2">2018年</div>
+        </div>
+    </div>
+
+</body>
+
+</html>

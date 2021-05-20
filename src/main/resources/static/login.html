@@ -1,54 +1,53 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>登录页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>矿坑生态修复</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
+<!--<script src="./lib/jquery/jquery-3.6.0.min.js"></script>-->
+<link rel="stylesheet" href="./lib/layui/css/layui.css">
+<script type="text/javascript" src="./lib/layui/layui.js"></script>
+<script src="./js/script.js"></script>
+
+
 <body>
-<h2>自定义登录页面</h2>
-<form action="/user/login" method="post">
-    <table>
-        <tr>
-            <td>用户名：</td>
-            <td><input type="text" name="username"></td>
-        </tr>
-        <tr>
-            <td>密码：</td>
-            <td><input type="password" name="password"></td>
-        </tr>
-        <tr>
-            <td colspan="2"><button type="submit">登录</button></td>
-        </tr>
-    </table>
-</form>
+<div class="container right-panel-active">
+    <!-- 注册 -->
+    <div class="container__form container--signup">
+        <div  class="form" id="form1">
+            <h2 class="form__title">注册账号</h2>
+            <input type="text" placeholder="用户名"  class="input" name="username" />
+            <input type="password" placeholder="密码"  class="input" name="password" />
+<!--            <input type="email" placeholder="Email" class="input" />-->
+            <button class="btn" id="register_user">点击注册</button>
+        </div>
+    </div>
+
+    <!-- 登录 action="/user/login" method="post"  -->
+    <div class="container__form container--signin">
+        <div class="form" id="form2">
+            <h2 class="form__title">欢迎登录</h2>
+            <input type="test" placeholder="用户名" class="input" id="username" name="username" />
+            <input type="password" placeholder="密码" class="input" id="password" name="password" />
+            <!--            <a href="#" class="link">忘记密码?</a>-->
+            <button class="btn" id="login_user">登录</button>
+        </div>
+    </div>
+    <!-- 叠加部分 -->
+    <div class="container__overlay">
+        <div class="overlay">
+            <div class="overlay__panel overlay--left">
+                <button class="btn" id="signIn">已有账号，直接登录</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+                <button class="btn" id="signUp">没有账号，点击注册</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>
-
-
-<!--<html class="logindiv" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>登录页面</title>-->
-<!--</head>-->
-<!--<body class="logindiv">-->
-<!--&lt;!&ndash;<div th:if="${param.error}">&ndash;&gt;-->
-<!--&lt;!&ndash;    <p>用户名或密码无效</p>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--<form class="logindiv"  method="post" autocomplete="off" >-->
-<!--    <div style="margin-top: 20%;margin-left: 40%;">-->
-<!--        <div><label> 用户名 : <input type="text" name="username" placeholder="name"/> </label></div>-->
-<!--        <div><label> 密码: <input type="password" name="password" placeholder="password"/> </label></div>-->
-<!--        <button type="submit" class="btn">登录</button>-->
-<!--    </div>-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
-<!--<style>-->
-<!--    .logindiv{-->
-<!--        height: 100%;-->
-<!--        width: 100%;-->
-<!--    }-->
-<!--</style>-->
