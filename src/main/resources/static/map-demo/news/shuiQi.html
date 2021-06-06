@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="秘书学系" />
+    <meta name="description" content="XX大学秘书学系" />
+    <title>秘书学系</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <!--header-->
+    <div class="top_wrap">
+        <!--top index-->
+        <div class="top">
+            <span class="welcome">欢迎您访问唐山市典型生态修复网站！</span>
+            <div class="corner">
+                <a onclick=SetHome(this,window.location) title="设为首页" href="javascript:void(0);">设为首页</a>
+                <span>|</span>
+                <a onclick=addFavorite(window.location,document.title) title="添加收藏" href="javascript:void(0);">加入收藏</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--logo and nav-->
+    <div class="header_wrap">
+        <div class="header">
+            <a href="index.html" class="logo"><img src="images/绿色矿山.jpg" /></a>
+            <div class="nav_list">
+                <ul id="nav" class="nav clearfix">
+                    <li class="nLi" style="display: none;"></li>
+                    <!-- <li class="nLi">
+                        <h3><a href="../bishe/signin.html">系统登录</a></h3>
+                        <ul class="sub">
+                            <li><a href="../bishe/signin.html">用户登录</a></li>
+                            <li><a href="../bishe/signin.html">用户注册</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nLi">
+                        <h3><a href="serve.html">生态修复模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/fourPeriodsLandUse.html">土地利用演变</a></li>
+                            <li>
+                                <a href="../georev/grabs.html">土壤裸露度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/fvc.html">植被覆盖度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/wet.html">地面湿润度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/lst.html">陆地地表温度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/bp.html">空气质量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/io.html">铁矿石含量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/2018jian2000.html">总体修复效果</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="study.html">生态评价模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geocom/2000resi.html">2000年评价结果</a></li>
+                            <li>
+                                <a href="../geocom/2018resi.html">2018年评价结果</a>
+                            </li>
+                            <!-- <li>
+                                <a href="../bishe/地面湿润度图表.html">草图绘制</a>
+                            </li>
+                            <li>
+                                <a href="../bishe/地面湿润度图表.html">点位转换</a>
+                            </li> -->
+                            <!-- <li>
+                                <a href="../bishe/陆地地表温度变化.html"></a>
+                            </li> -->
+                            <!-- <li><a href="../bishe/空气质量图表.html">空气质量变化统计</a></li>
+                            <li><a href="../bishe/铁矿石含量图表.html">铁矿石含量统计</a></li>
+                            <li><a href="../bishe/裸露度图表.html">土壤裸露度统计</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="serve.html">地图功能模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/measureMiningArea.html">矿区测量</a></li>
+                            <li><a href="../geoanys/search.html">矿区属性查询</a></li>
+                            <li><a href="../geoanys/sketchSnappingMagnifier.html">草图绘制</a></li>
+                            <li><a href="../geoanys/widgetsCoordinateconversion.html">点位转换</a></li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <!-- <h3><a href="resource.html">生态评价模块</a></h3> -->
+                        <ul class="sub">
+                            <!-- <li>
+                                <a href="resource.html"></a>
+                            </li> -->
+                            <!-- <li><a href="resource.html">法文类</a></li>
+                            <li><a href="resource.html">其他</a></li>
+                            <li><a href="resource.html">探秘天下</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--banner-->
+    <!--<div class="i_banner">
+			<img src="images/banner1.jpg" />
+		</div>-->
+    <!--content-->
+    <div class="i_content">
+        <div class="adr_wrap">
+            <div class="adr">
+                <span class="adr_link"><a href="index.html">首   页</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;矿种简介&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;金银矿石简介</span>
+            </div>
+        </div>
+        <div class="c_area">
+            <div class="left_list">
+                <div class="nav_title">矿种简介</div>
+                <div class="sidemenu">
+                    <ul>
+                        <li class="on"><a href="secret.html">水汽矿石简介</a></li>
+                        <!-- <li><a href="secret.html">2015国际秘书节</a></li> -->
+                    </ul>
+                </div>
+                <div class="contact">
+                    <a href="contact.html"><img src="images/tel.jpg" /></a>
+                </div>
+            </div>
+            <div class="right_content">
+                <div class="con_title">水汽矿石简介</div>
+                <div class="con_box">
+                    <h3>极品金矿石——足金狗头金</h3>
+                    <p>
+                        大块的、富含金质的流星陨落所产生的狗头金是极品狗头金，由于这种流星在穿越地球大气层时产生强烈摩擦和剧烈氧化燃烧，使得很多杂质在这个过程中消耗掉，由于黄金是稳定的单质，在高温下也很难与其他物质发生化学反应，即民间所说的“真金不怕火炼”，由于穿越大气层时温度很高，高于黄金的熔点1063℃，所以落地后成液体流动状态。这种狗头金含金量接近100%，世上极为罕见，或为民间私藏，或为镇国之宝。
+                    </p>
+                    <h3>高品位金矿石——黄金雨狗头金</h3>
+                    <p>富含金质的大块流星在穿越大气层时，由于温度过高、受热不均、流星内部组成成分不一，熔点和气化点都不同，所以产生爆炸，爆炸后的细小颗粒继续燃烧，如同冰雹一样，洒落在地球上的某一地区。由于杂质的气化带走热量和细小颗粒易于散热，所以黄金雨形成的狗头金多保留了黄金的自然晶体，等轴晶系，立方面心晶格，或者成半流体状。含金量也各不相同，由于是天然极品，多藏于民间或博物馆，所以也没有冶炼的报告。</p>
+                    <h3>普通金矿石——矿床金矿石</h3>
+                    <p>地球的黄金总储量大约有48亿吨，而分布在地核内的约有47亿吨，地幔8600万吨，而分布到地壳的只有不到1亿吨。地球上99%以上的金进入地核。金的这种分布是在地球长期演化过程中形成的。地球发展早期阶段形成的地壳其金的丰度较高，因此，大体上能代表早期残存地壳组成的太古宙绿岩带，尤其是镁铁质和超镁铁质火山岩组合，金丰度值高于地壳各类岩石，可能成为金矿床的最早的“矿源层”。综上所述，金在地壳中丰度值本来就很低，又具有亲硫性、亲铜性，亲铁性，高熔点等性质，要形成工业矿床，金要富集上千倍，要形成大矿、富矿，金则要富集几千、几万倍，甚至更高，可见其规模巨大的金矿一般要经历相当长的地质时期，通过多种来源，多次成矿作用叠加才可能形成。</p>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--footer-->
+    <div class="footer_wrap">
+        <div class="line"></div>
+        <div class="footer">
+            <div class="f_left">
+                <img src="images/红色矿山.png" class="f_logo" />
+                <div class="contact">
+                    <p><a href="contact.html">联系我们</a><a href="javascrip:void(0);">站长统计</a></p>
+                    <!-- <p>XX校区&nbsp;&nbsp;&nbsp;&nbsp;所在地址：XXXXXXXXXXXX</p> -->
+                    <p>版权所有： 唐山市自然资源与规划局&nbsp;&nbsp;&nbsp;&nbsp;电话：0315-5266600&nbsp;&nbsp;&nbsp;&nbsp;邮编：063000</p>
+                </div>
+            </div>
+            <div class="f_right">
+                <p><a href="http://zygh.tangshan.gov.cn/" style="text-decoration: underline;">唐山市自然资源与规划局官网入口</a></p>
+                <p>
+                    <a href=""></a>
+                </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</body>
+
+</html>

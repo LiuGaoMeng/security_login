@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="秘书学系" />
+    <meta name="description" content="XX大学秘书学系" />
+    <title>秘书学系</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <!--header-->
+    <div class="top_wrap">
+        <!--top index-->
+        <div class="top">
+            <span class="welcome">欢迎您访问唐山市典型生态修复网站！</span>
+            <div class="corner">
+                <a onclick=SetHome(this,window.location) title="设为首页" href="javascript:void(0);">设为首页</a>
+                <span>|</span>
+                <a onclick=addFavorite(window.location,document.title) title="添加收藏" href="javascript:void(0);">加入收藏</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--logo and nav-->
+    <div class="header_wrap">
+        <div class="header">
+            <a href="index.html" class="logo"><img src="images/绿色矿山.jpg" /></a>
+            <div class="nav_list">
+                <ul id="nav" class="nav clearfix">
+                    <li class="nLi" style="display: none;"></li>
+                    <!-- <li class="nLi">
+                        <h3><a href="../bishe/signin.html">系统登录</a></h3>
+                        <ul class="sub">
+                            <li><a href="../bishe/signin.html">用户登录</a></li>
+                            <li><a href="../bishe/signin.html">用户注册</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nLi">
+                        <h3><a href="serve.html">生态修复模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/fourPeriodsLandUse.html">土地利用演变</a></li>
+                            <li>
+                                <a href="../georev/grabs.html">土壤裸露度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/fvc.html">植被覆盖度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/wet.html">地面湿润度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/lst.html">陆地地表温度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/bp.html">空气质量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/io.html">铁矿石含量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/2018jian2000.html">总体修复效果</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="study.html">生态评价模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geocom/2000resi.html">2000年评价结果</a></li>
+                            <li>
+                                <a href="../geocom/2018resi.html">2018年评价结果</a>
+                            </li>
+                            <!-- <li>
+                                <a href="../bishe/地面湿润度图表.html">草图绘制</a>
+                            </li>
+                            <li>
+                                <a href="../bishe/地面湿润度图表.html">点位转换</a>
+                            </li> -->
+                            <!-- <li>
+                                <a href="../bishe/陆地地表温度变化.html"></a>
+                            </li> -->
+                            <!-- <li><a href="../bishe/空气质量图表.html">空气质量变化统计</a></li>
+                            <li><a href="../bishe/铁矿石含量图表.html">铁矿石含量统计</a></li>
+                            <li><a href="../bishe/裸露度图表.html">土壤裸露度统计</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="serve.html">地图功能模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/measureMiningArea.html">矿区测量</a></li>
+                            <li><a href="../geoanys/search.html">矿区属性查询</a></li>
+                            <li><a href="../geoanys/sketchSnappingMagnifier.html">草图绘制</a></li>
+                            <li><a href="../geoanys/widgetsCoordinateconversion.html">点位转换</a></li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <!-- <h3><a href="resource.html">生态评价模块</a></h3> -->
+                        <ul class="sub">
+                            <!-- <li>
+                                <a href="resource.html"></a>
+                            </li> -->
+                            <!-- <li><a href="resource.html">法文类</a></li>
+                            <li><a href="resource.html">其他</a></li>
+                            <li><a href="resource.html">探秘天下</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--banner-->
+    <!--<div class="i_banner">
+			<img src="images/banner1.jpg" />
+		</div>-->
+    <!--content-->
+    <div class="i_content">
+        <div class="adr_wrap">
+            <div class="adr">
+                <span class="adr_link"><a href="index.html">首   页</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;矿种简介&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;铁矿石简介</span>
+            </div>
+        </div>
+        <div class="c_area">
+            <div class="left_list">
+                <div class="nav_title">矿种简介</div>
+                <div class="sidemenu">
+                    <ul>
+                        <li class="on"><a href="secret.html">铁矿石简介</a></li>
+                        <!-- <li><a href="secret.html">2015国际秘书节</a></li> -->
+                    </ul>
+                </div>
+                <div class="contact">
+                    <a href="contact.html"><img src="images/tel.jpg" /></a>
+                </div>
+            </div>
+            <div class="right_content">
+                <div class="con_title">铁矿石简介</div>
+                <div class="con_box">
+                    <p>凡是含有可经济利用的铁元素的矿石叫做铁矿石。铁矿石的种类很多，用于炼铁的主要有磁铁矿（Fe3O4）、赤铁矿（Fe2O3）和菱铁矿（FeCO3）等。铁矿石试 样经盐酸溶解后，其中的铁转化为Fe3+。在强酸性条件下，Fe3+可通过SnCl2还原为Fe2+。Sn2+将Fe3+还原完毕后，甲基橙也可被Sn2+还原成氢化甲基橙而褪色，因而甲基橙可指示Fe3+还原终点。Sn2+还能继续使氢化甲基橙还原成N，N-二甲基对苯二胺和对氨基苯磺酸钠。铁矿石是国际大宗商品，战略物资，属于经济命脉一类的东西。
+                    </p>
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--footer-->
+    <div class="footer_wrap">
+        <div class="line"></div>
+        <div class="footer">
+            <div class="f_left">
+                <img src="images/红色矿山.png" class="f_logo" />
+                <div class="contact">
+                    <p><a href="contact.html">联系我们</a><a href="javascrip:void(0);">站长统计</a></p>
+                    <!-- <p>XX校区&nbsp;&nbsp;&nbsp;&nbsp;所在地址：XXXXXXXXXXXX</p> -->
+                    <p>版权所有： 唐山市自然资源与规划局&nbsp;&nbsp;&nbsp;&nbsp;电话：0315-5266600&nbsp;&nbsp;&nbsp;&nbsp;邮编：063000</p>
+                </div>
+            </div>
+            <div class="f_right">
+                <p><a href="http://zygh.tangshan.gov.cn/" style="text-decoration: underline;">唐山市自然资源与规划局官网入口</a></p>
+                <p>
+                    <a href=""></a>
+                </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</body>
+
+</html>

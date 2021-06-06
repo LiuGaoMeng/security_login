@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Snapping with Sketch widget and Magnifier | Sample | ArcGIS API for JavaScript 4.19</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.19/"></script>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        #configurationDiv {
+            padding: 10px;
+            text-align: left;
+            width: 250px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 22px;
+            vertical-align: middle;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 1px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+        
+        input:checked+.slider {
+            background-color: #2196f3;
+        }
+        
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196f3;
+        }
+        
+        input:checked+.slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+        /* Rounded sliders */
+        
+        .slider.round {
+            border-radius: 20px;
+        }
+        
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        
+        .labelText {
+            padding-left: 5px;
+            font-size: 15px;
+        }
+        
+        #mainDiv {
+            padding: 8px;
+        }
+    </style>
+    <script>
+        require([
+            "esri/widgets/Sketch",
+            "esri/Map",
+            "esri/layers/GraphicsLayer",
+            "esri/views/MapView",
+            "esri/layers/WebTileLayer",
+            "esri/layers/MapImageLayer",
+            "esri/widgets/Expand",
+            "esri/widgets/Legend"
+        ], (Sketch, Map, GraphicsLayer, MapView, WebTileLayer, MapImageLayer, Expand, Legend) => {
+            // Get reference to div elements
+            const magnifierSlider = document.getElementById("magnifierCheckbox");
+            const labelText = document.getElementById("labelText");
+            const selfSnapCheckBox = document.getElementById("selfSnappingCheckbox");
+            const featureSnapCheckBox = document.getElementById("featureSnappingCheckbox");
+            let toggle;
+            let layerDT = new WebTileLayer({
+                name: "天地图底图",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            let layerZJ = new WebTileLayer({
+                name: "天地图注记",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            const graphicsLayer = new GraphicsLayer();
+            var layer3 = new MapImageLayer({
+                // url: "https://wangl.yzrportal.com/server/rest/services/china2/MapServer"
+                url: "http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer"
+            });
+
+            const map = new Map({
+                // basemap: "dark-gray-vector",
+                layers: [layerDT, layerZJ, graphicsLayer, layer3]
+            });
+
+            const view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 10,
+                center: [118.48, 40.15]
+            });
+            //添加图例
+            var legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: layer3,
+                    title: "图例"
+                }]
+            });
+
+            view.ui.add(legend, "bottom-left");
+            const sketch = new Sketch({
+                layer: graphicsLayer,
+                view: view,
+                // graphic will be selected as soon as it is created
+                creationMode: "update",
+                snappingOptions: { // autocasts as SnappingOptions()
+                    enabled: true, // snapping will be on by default
+                    // feature snapping will be enabled on the GraphicsLayer
+                    featureSources: [{
+                        layer: graphicsLayer
+                    }]
+                }
+            });
+
+            const configurationExpand = new Expand({
+                expandIconClass: "esri-icon-settings2",
+                expandTooltip: "Show snapping configuration",
+                expanded: true,
+                view: view,
+                content: document.getElementById("configurationDiv")
+            });
+
+            view.when(() => {
+                // add the ui components to the view
+                view.ui.add(sketch, "top-right");
+                view.ui.add(configurationExpand, "bottom-right");
+
+                // Magnifier
+                view.magnifier.visible = false;
+                view.magnifier.factor = 1.7; // magnification factor
+                view.magnifier.size = 150; // magnifier image size
+                view.magnifier.offset = {
+                    x: 75,
+                    y: 75
+                }; // x and y offset values
+
+                // displays the Magnifier wherever the cursor appears on the Map
+                view.on("pointer-move", (evt) => {
+                    view.magnifier.position = {
+                        x: evt.x,
+                        y: evt.y
+                    };
+                });
+
+                // adding a shortcut key to toggle the Magnifier visibility. Use the 'm' key
+                view.on(["key-down", "key-up"], (event) => {
+                    if (event.type === "key-down" && event.key === "m") {
+                        view.magnifier.visible = toggle ? false : true;
+                    }
+                    if (event.type === "key-up" && event.key === "m") {
+                        view.magnifier.visible = toggle ? true : false;
+                    }
+                    magnifierSlider.checked = view.magnifier.visible;
+                });
+            });
+
+            // event listeners to toggle the Magnifier as well
+            // as the individual snapping functionality like self and feature snapping.
+            magnifierSlider.onchange = () => {
+                toggleMagnifier()
+            };
+
+            selfSnapCheckBox.checked = sketch.snappingOptions.selfEnabled;
+            selfSnapCheckBox.addEventListener("change", (event) => {
+                sketch.snappingOptions.selfEnabled = event.target.checked ? true : false;
+            });
+
+            featureSnapCheckBox.checked = sketch.snappingOptions.featureEnabled;
+            featureSnapCheckBox.addEventListener("change", (event) => {
+                sketch.snappingOptions.featureEnabled = event.target.checked ? true : false;
+            });
+
+            // toggle the Magnifier visibility
+            function toggleMagnifier() {
+                toggle = !toggle;
+                view.magnifier.visible = toggle;
+                view.focus(); // focus back to the view to listen for 'm' key
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div id="configurationDiv" class="esri-widget">
+        <h3>切换捕捉选项</h3>
+        <table id="configurationTable">
+            <tr>
+                <td><label for="selfSnappingCheckbox" id="selfSnappingCheckboxLabel">自我捕捉</label></td>
+                <td><input type="checkbox" id="selfSnappingCheckbox" /></td>
+            </tr>
+            <tr>
+                <td><label for="featureSnappingCheckbox" id="featureSnappingCheckboxLabel">功能捕捉</label></td>
+                <td><input type="checkbox" id="featureSnappingCheckbox" /></td>
+            </tr>
+        </table>
+        <hr />
+        <div id="mainDiv" class="esri-widget">
+            <label class="switch">
+        <input id="magnifierCheckbox" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+            <label class="labelText" id="labelText">放大镜</label>
+            <p><i>点击<b>'m'</b>键来切换放大镜</i></p>
+        </div>
+    </div>
+</body>
+
+</html>

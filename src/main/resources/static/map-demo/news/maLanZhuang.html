@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="news" />
+    <meta name="description" content="news" />
+    <title>news</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <!--header-->
+    <div class="top_wrap">
+        <!--top index-->
+        <div class="top">
+            <span class="welcome">欢迎您访问唐山市典型生态修复网站！</span>
+            <div class="corner">
+                <a onclick=SetHome(this,window.location) title="设为首页" href="javascript:void(0);">设为首页</a>
+                <span>|</span>
+                <a onclick=addFavorite(window.location,document.title) title="添加收藏" href="javascript:void(0);">加入收藏</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--logo and nav-->
+    <div class="header_wrap">
+        <div class="header">
+            <a href="index.html" class="logo"><img src="images/绿色矿山.jpg" /></a>
+            <div class="nav_list">
+                <ul id="nav" class="nav clearfix">
+                    <li class="nLi" style="display: none;"></li>
+                    <!-- <li class="nLi">
+                        <h3><a href="../bishe/signin.html">系统登录</a></h3>
+                        <ul class="sub">
+                            <li><a href="../bishe/signin.html">用户登录</a></li>
+                            <li><a href="../bishe/signin.html">用户注册</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nLi">
+                        <h3><a href="serve.html">生态修复模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/fourPeriodsLandUse.html">土地利用演变</a></li>
+                            <li>
+                                <a href="../georev/grabs.html">土壤裸露度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/fvc.html">植被覆盖度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/wet.html">地面湿润度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/lst.html">陆地地表温度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/bp.html">空气质量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/io.html">铁矿石含量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/2018jian2000.html">总体修复效果</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="study.html">生态评价模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geocom/2000resi.html">2000年评价结果</a></li>
+                            <li>
+                                <a href="../geocom/2018resi.html">2018年评价结果</a>
+                            </li>
+                            <!-- <li>
+                                <a href="../bishe/地面湿润度图表.html">草图绘制</a>
+                            </li>
+                            <li>
+                                <a href="../bishe/地面湿润度图表.html">点位转换</a>
+                            </li> -->
+                            <!-- <li>
+                                <a href="../bishe/陆地地表温度变化.html"></a>
+                            </li> -->
+                            <!-- <li><a href="../bishe/空气质量图表.html">空气质量变化统计</a></li>
+                            <li><a href="../bishe/铁矿石含量图表.html">铁矿石含量统计</a></li>
+                            <li><a href="../bishe/裸露度图表.html">土壤裸露度统计</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="serve.html">地图功能模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/measureMiningArea.html">矿区测量</a></li>
+                            <li><a href="../geoanys/search.html">矿区属性查询</a></li>
+                            <li><a href="../geoanys/sketchSnappingMagnifier.html">草图绘制</a></li>
+                            <li><a href="../geoanys/widgetsCoordinateconversion.html">点位转换</a></li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <!-- <h3><a href="resource.html">生态评价模块</a></h3> -->
+                        <ul class="sub">
+                            <!-- <li>
+                                <a href="resource.html"></a>
+                            </li> -->
+                            <!-- <li><a href="resource.html">法文类</a></li>
+                            <li><a href="resource.html">其他</a></li>
+                            <li><a href="resource.html">探秘天下</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--banner-->
+    <!--<div class="i_banner">
+			<img src="images/banner1.jpg" />
+		</div>-->
+    <!--content-->
+    <div class="i_content">
+        <div class="adr_wrap">
+            <div class="adr">
+                <span class="adr_link"><a href="index.html">首   页</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;矿区概貌&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;马兰庄矿区简介</span>
+            </div>
+        </div>
+        <div class="c_area">
+            <div class="left_list">
+                <div class="nav_title">矿区概貌</div>
+                <div class="sidemenu">
+                    <ul>
+                        <li class="on"><a href="secret.html">马兰庄矿区简介</a></li>
+                        <!-- <li><a href="secret.html">2015国际秘书节</a></li> -->
+                    </ul>
+                </div>
+                <div class="contact">
+                    <a href="contact.html"><img src="images/tel.jpg" /></a>
+                </div>
+            </div>
+            <div class="right_content">
+                <div class="con_title">马兰庄矿区简介</div>
+                <div class="con_box">
+                    <p>闭库尾矿库生态恢复治理取得了显著成效。库区干滩直接栽种沙棘，共260万株，如今已全部成活成沙棘林；各坝台覆土后栽植刺槐、火炬、香花槐、垂柳、馒头柳等乔木共15650棵，成活率达到95%以上。而且乔木种植间种刺槐籽3500公斤，实现了立体种植，充分保证林木覆盖率达95%以上。尾矿库环境得到了彻底改观，昔日的沙滩今日变成了林荫绿地，引来了众多的野山鸡等各种鸟类和野山兔等小动物前来栖息，一个微型生态环境基本形成。
+                    </p>
+                    <p>　绿化工程。老排土场总治理面积约77.7万m2，道路面积约2.84万m2，在平台及坡面上播撒刺槐种子或栽植耐寒、耐旱、耐湿、耐盐碱、抗风沙、抗逆性极强的的刺槐苗及爬山虎。 　　挡土墙的砌护工程。在老排土场沿路边设置钢丝石笼挡土墙。使用1m×1m×2m钢丝笼，石笼之间用8#铅丝绑扎连接固定。施工中，自行铲运机运土7944m3，装载机平土方2768m3，制作钢筋铁丝笼1388个，砌筑毛石1618.4m3，挡墙总长度为414m。钢丝石笼挡墙工程的实施，有效防止了高陡边坡松散碎石的掉落对通行车辆、人员的伤害，确保了高陡边坡的稳定，再无危岩体出现。坡脚挡墙的设置有效的稳定了整个坡体，起到了固坡脚的作用。
+                        　　拦挡坝砌护工程。拦挡坝主要修建在老排土场北侧靠近柳河峪村地段和西侧邻近道路地段。拦挡坝采用浆砌石结构，坝底宽度4.0m，顶宽2.0m，总高度5m(地面以上3m；抗滑埋深2m，以见基岩为准)，外坡为直墙型，内坡倾斜。老排土场区域修建的拦挡坝总长度701m。拦挡坝工程的实施，为排土场小型滑坡、泥石流和大石滚落留设了安全保护距离。 　　排水工程。排水设施主要包括公路排水沟（长3224m），分别为1#和3#公路排水沟。该工程主要是在排土场顶部平台最低点清挖出排水沟，连接到从公路内侧清挖出的排水沟，将排土场汇水自上而下引到170m水平后排至排土场下游。
+                    </p>
+
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--footer-->
+    <div class="footer_wrap">
+        <div class="line"></div>
+        <div class="footer">
+            <div class="f_left">
+                <img src="images/红色矿山.png" class="f_logo" />
+                <div class="contact">
+                    <p><a href="contact.html">联系我们</a><a href="javascrip:void(0);">站长统计</a></p>
+                    <!-- <p>XX校区&nbsp;&nbsp;&nbsp;&nbsp;所在地址：XXXXXXXXXXXX</p> -->
+                    <p>版权所有： 唐山市自然资源与规划局&nbsp;&nbsp;&nbsp;&nbsp;电话：0315-5266600&nbsp;&nbsp;&nbsp;&nbsp;邮编：063000</p>
+                </div>
+            </div>
+            <div class="f_right">
+                <p><a href="http://zygh.tangshan.gov.cn/" style="text-decoration: underline;">唐山市自然资源与规划局官网入口</a></p>
+                <p>
+                    <a href=""></a>
+                </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</body>
+
+</html>

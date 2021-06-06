@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Create a 2D map</title>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .content {
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+            position: absolute;
+            top: 15px;
+            left: 80px;
+            width: 200px;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .input-warp {
+            width: 150px;
+            margin: 10px 25px;
+        }
+        
+        .input-warp>input {
+            margin: 5px 0px 0px 0px;
+            width: 50px;
+            display: inline-block;
+            height: 20px;
+        }
+        
+        #execute {
+            margin-bottom: 15px;
+        }
+        
+        .legend {
+            display: none;
+            position: absolute;
+            bottom: 25px;
+            left: 100px;
+            background: #fff;
+            height: 160px;
+            width: 120px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        
+        .level {
+            width: 25px;
+            height: 15px;
+            display: inline-block;
+            margin: 5px 20px 0px 20px;
+        }
+        
+        .mapTool {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        
+        span {
+            font-size: 14px;
+        }
+    </style>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://120.79.149.109:12306/arcgis_js_api/library/4.17/esri/themes/light/main.css" />
+    <script type="text/javascript" src="http://120.79.149.109:12306/arcgis_js_api/library/4.17/init.js"></script>
+    <script>
+        let url = "http://120.79.149.109:12306/arcgis_js_api/library/4.17/";
+        require([
+                "dojo/on",
+                "dojo/dom",
+                "esri/Map",
+                "esri/views/MapView",
+                "esri/layers/FeatureLayer",
+                "esri/layers/MapImageLayer",
+                "esri/layers/WebTileLayer",
+                "esri/tasks/QueryTask",
+                "esri/tasks/support/Query",
+                "esri/tasks/FindTask",
+                "esri/tasks/support/FindParameters",
+                "esri/Graphic",
+                "esri/symbols/SimpleFillSymbol",
+                "esri/Color",
+                "esri/PopupTemplate",
+                "esri/tasks/support/RasterData",
+                "esri/tasks/Geoprocessor",
+                "esri/widgets/Legend"
+            ],
+            function(on, dom, Map, MapView, FeatureLayer, MapImageLayer, WebTileLayer, QueryTask, Query, FindTask, FindParameters, Graphic, SimpleFillSymbol, Color, PopupTemplate, RasterData, Geoprocessor, Legend) {
+                let layerDT = new WebTileLayer({
+                    name: "天地图底图",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+                let layerZJ = new WebTileLayer({
+                    name: "天地图注记",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+                var popupTemplate2 = {
+                    title: "Population in",
+                    content: "2222"
+                }
+                let layer = new MapImageLayer({
+                    url: "http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer",
+                    sublayers: [{
+                        id: 5,
+                        visible: true,
+                        popupTemplate: {
+                            title: "县界",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [{
+                                    fieldName: "name",
+                                    label: "名称"
+                                }, {
+                                    fieldName: "Shape_Area",
+                                    label: "面积"
+                                }]
+                            }]
+                        }
+                    }, {
+                        id: 4,
+                        visible: true,
+                        popupTemplate: {
+                            title: "矿业开发密集区1990",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [{
+                                    fieldName: "name",
+                                    label: "名称"
+                                }, {
+                                    fieldName: "Shape_Area",
+                                    label: "面积"
+                                }]
+                            }]
+                        }
+                    }, {
+                        id: 3,
+                        visible: true,
+                        popupTemplate: {
+                            title: "矿业开发密集区2000",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [{
+                                    fieldName: "name",
+                                    label: "名称"
+                                }, {
+                                    fieldName: "Shape_Area",
+                                    label: "面积"
+                                }]
+                            }]
+                        }
+                    }, {
+                        id: 2,
+                        visible: true,
+                        popupTemplate: {
+                            title: "矿业开发密集区2010",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [{
+                                    fieldName: "name",
+                                    label: "名称"
+                                }, {
+                                    fieldName: "Shape_Area",
+                                    label: "面积"
+                                }]
+                            }]
+                        }
+                    }, {
+                        id: 1,
+                        visible: true,
+                    }, {
+                        id: 0,
+                        visible: true,
+                        popupTemplate: {
+                            title: "类型",
+                            content: [{
+                                type: "fields",
+                                fieldInfos: [{
+                                    fieldName: "线路类型",
+                                    label: "类型"
+                                }, {
+                                    fieldName: "Shape_Length",
+                                    label: "长度"
+                                }]
+                            }]
+                        }
+                    }]
+                });
+
+
+                let map = new Map({
+                    layers: [layerDT, layerZJ, layer]
+                });
+                var view = new MapView({
+                    container: 'viewDiv',
+                    map: map,
+                    zoom: 10,
+                    center: [118.48, 40.15]
+                });
+                //添加图例
+                var legend = new Legend({
+                    view: view,
+                    layerInfos: [{
+                        layer: layer,
+                        title: "图例"
+                    }]
+                });
+
+                view.ui.add(legend, "bottom-left");
+                let lineSymbol = {
+                    type: "simple-line", // autocasts as SimpleLineSymbol()
+                    color: [0, 255, 255],
+                    width: 4
+                };
+                let fillsymbol = {
+                    type: "simple-fill", // autocasts as new SimpleFillSymbol()
+                    color: [0, 255, 255],
+                    style: "solid"
+                };
+                var symbolStyle;
+
+                $('#accurateSearch').on("click", () => {
+                    view.graphics.removeAll(); //清除上一次点击目标
+                    var layerIds = []
+                    let name;
+                    let attr = $('#attrName').val();
+                    let layer = $('#layerSelect').val()
+                    switch (layer) {
+                        case '0':
+                            name = '线路类型';
+                            break;
+                        default:
+                            name = 'Name';
+                    }
+                    if (layer == "0" || layer == "1") {
+                        symbolStyle = lineSymbol
+                    } else if (layer == "2") {
+                        layerIds = [2, 3, 4];
+                        symbolStyle = fillsymbol;
+                    } else {
+                        symbolStyle = fillsymbol
+                    }
+                    if (layerIds.length > 0) {
+                        layerIds.forEach((item) => {
+                            queryTaskMed(item, symbolStyle, name, attr)
+                        })
+                    } else {
+                        queryTaskMed(layer, symbolStyle, name, attr)
+                    }
+                });
+                $('#fuzzySearch').on("click", function() {
+                    view.graphics.removeAll(); //清除上一次点击目标
+                    var findTask = new FindTask("http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer")
+                    var findParameters = new FindParameters();
+                    let name;
+                    let attr = $('#attrName').val();
+                    let layer = $('#layerSelect').val();
+                    if (layer == "0" || layer == "1") {
+                        symbolStyle = lineSymbol;
+                        findParameters.layerIds = [layer]
+                    } else if (layer == "2") {
+                        findParameters.layerIds = [2, 3, 4];
+                        symbolStyle = fillsymbol;
+                    } else {
+                        symbolStyle = fillsymbol;
+                        findParameters.layerIds = [layer]
+                    }
+                    switch (layer) {
+                        case '0':
+                            name = '线路类型';
+                            break;
+                        default:
+                            name = 'Name';
+                    }
+
+                    findParameters.returnGeometry = true; //是否返回几何对象
+                    findParameters.contains = true; //是否接受模糊查找,如果仅仅进行模糊查询
+
+                    findParameters.searchFields = [name];
+                    findParameters.searchText = attr; //查询字段中包含
+                    findTask.execute(findParameters).then(function(results) {
+                        results.results.forEach(function(item) {
+                            let polylineGraphic = new Graphic({
+                                geometry: item.feature.geometry,
+                                symbol: symbolStyle,
+                            });
+                            view.graphics.add(polylineGraphic); //添加新的点击目标
+                        })
+                    });
+                });
+
+                function queryTaskMed(layerId, symbolStyle, name, attr) {
+                    var queryTask = new QueryTask({
+                        url: "http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer/" + layerId
+                    });
+                    var query = new Query();
+                    query.returnGeometry = true;
+                    query.outFields = ["*"];
+                    query.where = name + "='" + attr + "'"
+                    queryTask.execute(query).then(function(results) {
+                        results.features.forEach(function(item) {
+                            let polylineGraphic = new Graphic({
+                                geometry: item.geometry,
+                                symbol: symbolStyle,
+                            });
+                            view.graphics.add(polylineGraphic); //添加新的点击目标
+                        })
+
+                    })
+                }
+            });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+
+    <div class="mapTool">
+        <div class="card">
+            <div class="input-group" style="width:600px">
+                <select class="custom-select" id="layerSelect">
+		<option selected value="0">线路</option>
+		<option value="2">矿区</option>
+		<option value="1">县界</option>
+		<option value="5">县区</option>
+	  </select>
+                <input type="text" class="form-control" style="width:150px" placeholder="属性值" aria-label="属性值" id="attrName" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button" id="accurateSearch">精确查询</button>
+                    <button class="btn btn-primary" type="button" id="fuzzySearch">模糊查询</button>
+                </div>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="legend-title" style="text-align: center;">图例</div>
+            <div class="legend-warp">
+                <div><span class="level" style="background-color: #FF0000;"></span><span>差</span></div>
+                <div><span class="level" style="background-color: #FF7F50;"></span><span>较差</span></div>
+                <div><span class="level" style="background-color: #FFFF00;"></span><span>一般</span></div>
+                <div><span class="level" style="background-color: #90EE90;"></span><span>良</span></div>
+                <div><span class="level" style="background-color: #00FF00;"></span><span>优</span></div>
+            </div>
+        </div>
+</body>
+
+</html>

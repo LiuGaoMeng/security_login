@@ -1,0 +1,120 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=bar-polar-stack-radial
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+
+option = {
+    angleAxis: {
+        type: 'category',
+        data: ['1992', '2000', '2009', '2018']
+    },
+    title: {
+        text: '矿区空气质量分布图',
+        
+    },
+    radiusAxis: {
+    },
+    polar: {
+    },
+    series: [{
+        type: 'bar',
+        data: [6.98 , 5.98 , 10.42, 6.07],
+        coordinateSystem: 'polar',
+        name: '优',
+        color:'	#5F9EA0',
+        stack: 'a',
+        emphasis: {
+            focus: 'series'
+        }
+    }, {
+        type: 'bar',
+        data: [37.50 , 9.99 , 29.15 , 32.52],
+        coordinateSystem: 'polar',
+        name: '良',
+     color:'#3CB371',
+        stack: 'a',
+        emphasis: {
+            focus: 'series'
+        }
+    }, {
+        type: 'bar',
+        data: [34.54, 27.00 , 34.83,32.25],
+        coordinateSystem: 'polar',
+        name: '一般',
+         color:'#FFFF00',
+        stack: 'a',
+        emphasis: {
+            focus: 'series'
+        }
+    },
+    {
+        type: 'bar',
+        data: [14.52,39.25, 17.31,19.62],
+        coordinateSystem: 'polar',
+        color:'#FF8C00',
+        name: '较差',
+        stack: 'a',
+        emphasis: {
+            focus: 'series'
+        }
+    },
+    {
+        type: 'bar',
+        data: [6.46 ,17.79 , 8.29 ,9.54],
+        coordinateSystem: 'polar',
+        name: '差',
+        color:'#FF0000',
+        stack: 'a',
+        emphasis: {
+            focus: 'series'
+        }
+    }
+    ],
+    legend: {
+        show: true,
+        data: ['优', '良', '一般','较差','差']
+    }
+};
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>
+    

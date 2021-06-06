@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Measurement in 2D | Sample | ArcGIS API for JavaScript 4.18</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        #topbar {
+            background: #fff;
+            padding: 10px;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 70px;
+            left: 100px;
+            background: #fff;
+            height: 170px;
+            width: 140px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        
+        .action-button {
+            font-size: 16px;
+            background-color: transparent;
+            border: 1px solid #d3d3d3;
+            color: #6e6e6e;
+            height: 32px;
+            width: 32px;
+            text-align: center;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-button:hover,
+        .action-button:focus {
+            background: #0079c1;
+            color: #e4e4e4;
+        }
+        
+        .active {
+            background: #0079c1;
+            color: #e4e4e4;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <script>
+        require(["esri/Map",
+            "esri/views/MapView",
+            "esri/WebMap", "esri/layers/MapImageLayer",
+            "esri/widgets/DistanceMeasurement2D",
+            "esri/widgets/AreaMeasurement2D",
+            "esri/layers/WebTileLayer",
+            "esri/widgets/Legend"
+        ], function(Map, MapView, WebMap, MapImageLayer, DistanceMeasurement2D, AreaMeasurement2D, WebTileLayer, Legend) {
+            var activeWidget = null;
+
+
+            let layerDT = new WebTileLayer({
+                name: "天地图底图",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            let layerZJ = new WebTileLayer({
+                name: "天地图注记",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            var layer3 = new MapImageLayer({
+                // url: "https://wangl.yzrportal.com/server/rest/services/china2/MapServer"
+                url: "http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer"
+            });
+
+
+            var map = new Map({
+
+                layers: [layerDT, layerZJ, layer3]
+            });
+
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 10,
+                center: [118.48, 40.18]
+            });
+            //添加图例
+            var legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: layer3,
+                    title: "图例"
+                }]
+            });
+            view.ui.add(legend, "bottom-left");
+
+            view.when(function() {
+                view.extent = layer3.fullExtent;
+            });
+
+            // add the toolbar for the measurement widgets
+            view.ui.add("topbar", "top-right");
+
+            document.getElementById("distanceButton").addEventListener("click", function() {
+                setActiveWidget(null);
+                if (!this.classList.contains("active")) {
+                    setActiveWidget("distance");
+                } else {
+                    setActiveButton(null);
+                }
+            });
+
+            document.getElementById("areaButton").addEventListener("click", function() {
+                setActiveWidget(null);
+                if (!this.classList.contains("active")) {
+                    setActiveWidget("area");
+                } else {
+                    setActiveButton(null);
+                }
+            });
+
+            function setActiveWidget(type) {
+                switch (type) {
+                    case "distance":
+                        activeWidget = new DistanceMeasurement2D({
+                            view: view
+                        });
+
+                        // skip the initial 'new measurement' button
+                        activeWidget.viewModel.newMeasurement();
+
+                        view.ui.add(activeWidget, "top-right");
+                        setActiveButton(document.getElementById("distanceButton"));
+                        break;
+                    case "area":
+                        activeWidget = new AreaMeasurement2D({
+                            view: view
+                        });
+
+                        // skip the initial 'new measurement' button
+                        activeWidget.viewModel.newMeasurement();
+
+                        view.ui.add(activeWidget, "top-right");
+                        setActiveButton(document.getElementById("areaButton"));
+                        break;
+                    case null:
+                        if (activeWidget) {
+                            view.ui.remove(activeWidget);
+                            activeWidget.destroy();
+                            activeWidget = null;
+                        }
+                        break;
+                }
+            }
+
+            function setActiveButton(selectedButton) {
+                // focus the view to activate keyboard shortcuts for sketching
+                view.focus();
+                var elements = document.getElementsByClassName("active");
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].classList.remove("active");
+                }
+                if (selectedButton) {
+                    selectedButton.classList.add("active");
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+    <div id="topbar">
+        <button class="action-button esri-icon-measure-line" id="distanceButton" type="button" title="Measure distance between two or more points"></button>
+        <button class="action-button esri-icon-measure-area" id="areaButton" type="button" title="Measure area"></button>
+
+    </div>
+    <!-- <div class="legend">
+        <div class="legend-title" style="text-align: center;">图例</div>
+        <div class="legend-warp">
+            <div><span class="level" style="background-color: #FF0000;"></span><span>人工表面</span></div>
+            <div><span class="level" style="background-color: #0000FF;"></span><span>水域</span></div>
+            <div><span class="level" style="background-color: #FFFF00;"></span><span>耕地</span></div>
+            <div><span class="level" style="background-color: #006400;"></span><span>林地</span></div>
+            <div><span class="level" style="background-color: #00FF00;"></span><span>草地</span></div>
+            <div><span class="level" style="background-color: #CD853F;"></span><span>未利用土地</span></div>
+        </div>
+    </div> -->
+</body>
+
+</html>

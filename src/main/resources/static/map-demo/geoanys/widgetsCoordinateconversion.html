@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>CoordinateConversion widget | Sample | ArcGIS API for JavaScript 4.19</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.19/esri/themes/light/main.css" />
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+    <script src="https://js.arcgis.com/4.19/"></script>
+    <script>
+        require(["esri/views/MapView", "esri/widgets/CoordinateConversion", "esri/Map", "esri/widgets/Legend", "esri/layers/WebTileLayer",
+            "esri/layers/MapImageLayer",
+        ], function(
+            MapView,
+            CoordinateConversion,
+            Map,
+            Legend,
+            WebTileLayer,
+            MapImageLayer
+        ) {
+            let layerDT = new WebTileLayer({
+                name: "天地图底图",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            let layerZJ = new WebTileLayer({
+                name: "天地图注记",
+                urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+            })
+            var layer3 = new MapImageLayer({
+                // url: "https://wangl.yzrportal.com/server/rest/services/china2/MapServer"
+                url: "http://localhost:6080/arcgis/rest/services/shiliangtu/mijiqu/MapServer"
+            });
+            var map = new Map({
+                layers: [layerDT, layerZJ, layer3]
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [118.48, 40.18],
+                zoom: 10
+            });
+            //添加图例
+            var legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: layer3,
+                    title: "图例"
+                }]
+            });
+            view.ui.add(legend, "bottom-left");
+            var ccWidget = new CoordinateConversion({
+                view: view
+            });
+
+            view.ui.add(ccWidget, "bottom-right");
+        });
+    </script>
+</head>
+
+<body class="calcite">
+    <div id="viewDiv"></div>
+</body>
+
+</html>

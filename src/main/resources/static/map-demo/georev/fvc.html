@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Create a 2D map</title>
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+        
+        #viewDiv1 {
+            padding: 0;
+            margin: 0;
+            height: 99%;
+            width: 49.5%;
+            display: inline-block;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            background: #fff;
+            height: 170px;
+            width: 140px;
+            border-radius: 10px;
+            border: 1px solid #ced4da;
+        }
+        
+        .content {
+            position: absolute;
+            top: 20px;
+            left: 80px
+        }
+        
+        .esri-view-root {
+            height: 100%;
+            width: 100%;
+        }
+        
+        #viewDiv2 {
+            padding: 0;
+            margin: 0;
+            height: 99%;
+            width: 49.5%;
+            display: inline-block;
+        }
+        
+        .content {
+            position: absolute;
+            top: 20px;
+            left: 80px
+        }
+        /* 隐藏esri自带工具 */
+        
+        .esri-ui-top-left .esri-zoom {
+            display: none;
+        }
+        
+        .esri-attribution__powered-by {
+            display: none;
+        }
+        
+        .level {
+            width: 25px;
+            height: 15px;
+            display: inline-block;
+            margin: 5px 20px 0px 20px;
+        }
+        
+        span {
+            font-size: 14px;
+        }
+    </style>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- bootstrap.bundle.min.js 用于弹窗、提示、下拉菜单，包含了 popper.min.js -->
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://120.79.149.109:12306/arcgis_js_api/library/4.17/esri/themes/light/main.css" />
+    <script type="text/javascript" src="http://120.79.149.109:12306/arcgis_js_api/library/4.17/init.js"></script>
+    <script>
+        let view2018, view2020, print2018, print2020
+        require([
+                "esri/Map",
+                "esri/views/MapView",
+                "esri/layers/MapImageLayer",
+                "esri/layers/WebTileLayer",
+                "esri/widgets/Print"
+            ],
+            function(Map, MapView, MapImageLayer, WebTileLayer, Print) {
+                let layer2018 = new MapImageLayer({
+                    url: 'http://localhost:6080/arcgis/rest/services/environmentRecovery/2000FVC/MapServer'
+                })
+                let layer2020 = new MapImageLayer({
+                    url: '	http://localhost:6080/arcgis/rest/services/environmentRecovery/2018FVC/MapServer'
+                })
+                let layerDT2018 = new WebTileLayer({
+                    name: "天地图底图",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+                let layerZJ2018 = new WebTileLayer({
+                    name: "天地图注记",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+                let layerDT2020 = new WebTileLayer({
+                    name: "天地图底图",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+                let layerZJ2020 = new WebTileLayer({
+                    name: "天地图注记",
+                    urlTemplate: 'http://t0.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}&tk=42dca576db031641be0524ee977ddd04'
+                })
+
+                let map2018 = new Map({
+                    layers: [layerDT2018, layerZJ2018]
+                });
+                let map2020 = new Map({
+                    layers: [layerDT2020, layerZJ2020]
+                });
+
+                map2018.add(layer2018)
+                map2020.add(layer2020)
+
+                view2018 = new MapView({
+                    container: 'viewDiv1',
+                    map: map2018,
+                    zoom: 10,
+                    center: [118.48, 40.18]
+                });
+                print2018 = new Print({
+                    view: view2018,
+                    // specify your own print service
+                    printServiceUrl: "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+                });
+                view2020 = new MapView({
+                    container: 'viewDiv2',
+                    map: map2020,
+                    zoom: 10,
+                    center: [118.48, 40.18]
+                });
+                print2020 = new Print({
+                    view: view2020,
+                    // specify your own print service
+                    printServiceUrl: "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
+                });
+                view2018.on("drag", (event) => {
+                    if (event.action === "end") {
+                        view2020.extent = view2018.extent
+                    }
+                })
+                view2020.on("drag", (event) => {
+                    if (event.action === "end") {
+                        view2018.extent = view2020.extent
+                    }
+                })
+                view2018.on("mouse-wheel", (event) => {
+                    setTimeout(() => {
+                        if (event.type === "mouse-wheel") {
+                            view2020.extent = view2018.extent
+                        }
+                    }, 300);
+                })
+                view2020.on("mouse-wheel", (event) => {
+                    setTimeout(() => {
+                        if (event.type === "mouse-wheel") {
+                            view2018.extent = view2020.extent
+                        }
+                    }, 300);
+                })
+            });
+        $(document).ready(function() {
+            $("#execute2018").click(function() {
+                view2018.ui.add(print2018, "top-right");
+                $("#viewDiv1").css("width", "99%");
+                $("#viewDiv2").css("width", "0%");
+            });
+            $("#execute2020").click(function() {
+                view2020.ui.add(print2020, "top-right");
+                $("#viewDiv1").css("width", "0%");
+                $("#viewDiv2").css("width", "99%");
+            });
+            $("#executehome").click(function() {
+                view2018.ui.remove(print2018);
+                view2020.ui.remove(print2020);
+                $("#viewDiv1").css("width", "49%");
+                $("#viewDiv2").css("width", "49%");
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv1"></div>
+    <div id="viewDiv2"></div>
+    <div class="content">
+        <button id="execute2018" type="button" class="btn btn-outline-primary btn-sm">查看2000年</button>
+        <button id="execute2020" type="button" class="btn btn-outline-primary btn-sm">查看2018年</button>
+        <button id="executehome" type="button" class="btn btn-outline-primary btn-sm">返回首页</button>
+    </div>
+    <div class="legend">
+        <div class="legend-title" style="text-align: center;">图例</div>
+        <div class="legend-warp">
+            <div><span class="level" style="background-color: #C2523C;"></span><span>低覆盖度</span></div>
+            <div><span class="level" style="background-color: #F0B411;"></span><span>中低覆盖度</span></div>
+            <div><span class="level" style="background-color: #7BED00;"></span><span>中覆盖度</span></div>
+            <div><span class="level" style="background-color: #1BA87C;"></span><span>中高覆盖度</span></div>
+            <div><span class="level" style="background-color: #267300;"></span><span>高覆盖度</span></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=area-stack-gradient
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+
+option = {
+    color: ['#00FF00', '#228B22', '#FFFF00', '#FF8C00', '#FF0000'],
+    title: {
+        text: '陆地表面温度变化图'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#6a7985'
+            }
+        }
+    },
+    legend: {
+        data: ['低温', '中低温', '中温', '中高温', '高温']
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [
+        {
+            type: 'category',
+            boundaryGap: false,
+            data: ['1990', '2000', '2009', '2018']
+            
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name:'面积（平方千米）'
+        }
+    ],
+    series: [
+        {
+            name: '低温',
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            lineStyle: {
+                width: 0
+            },
+            showSymbol: false,
+            areaStyle: {
+                opacity: 0.8,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(128, 255, 165)'
+                }, {
+                    offset: 1,
+                    color: 'rgba(1, 191, 236)'
+                }])
+            },
+            emphasis: {
+                focus: 'series'
+            },
+            data: [24.01, 44.80, 72.23, 63.46]
+        },
+        {
+            name: '中低温',
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            lineStyle: {
+                width: 0
+            },
+            showSymbol: false,
+            areaStyle: {
+                opacity: 0.8,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(0, 221, 255)'
+                }, {
+                    offset: 1,
+                    color: '#228B22'
+                }])
+            },
+            emphasis: {
+                focus: 'series'
+            },
+            data: [185.52, 211.76,353.01, 264.88]
+        },
+        {
+            name: '中温',
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            lineStyle: {
+                width: 0
+            },
+            showSymbol: false,
+            areaStyle: {
+                opacity: 0.8,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(55, 162, 255)'
+                }, {
+                    offset: 1,
+                    color: '#FFFF00'
+                }])
+            },
+            emphasis: {
+                focus: 'series'
+            },
+            data: [1369.27,556.36, 953.22, 972.53]
+        },
+        {
+            name: '中高温',
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            lineStyle: {
+                width: 0
+            },
+            showSymbol: false,
+            areaStyle: {
+                opacity: 0.8,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(255, 0, 135)'
+                }, {
+                    offset: 1,
+                    color: '#FF8C00'
+                }])
+            },
+            emphasis: {
+                focus: 'series'
+            },
+            data: [735.79 , 1177.49, 886.14, 745.67]
+        },
+        {
+            name: '高温',
+            type: 'line',
+            stack: '总量',
+            smooth: true,
+            lineStyle: {
+                width: 0
+            },
+            showSymbol: false,
+            label: {
+                show: true,
+                position: 'top'
+            },
+            areaStyle: {
+                opacity: 0.8,
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(255, 191, 0)'
+                }, {
+                    offset: 1,
+                    color: '#FF0000'
+                }])
+            },
+            emphasis: {
+                focus: 'series'
+            },
+            data: [368.88, 688.49, 423.35,641.36]
+        }
+    ]
+};
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>
+    

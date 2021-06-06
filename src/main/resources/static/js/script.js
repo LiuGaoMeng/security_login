@@ -50,7 +50,7 @@ layui.use(['jquery','layer'],function(){
                 },
                 success:function (data) {
                     layer.msg(data.msg, { icon: 1, area:['250px', '70px'], time:1000 },function(){
-                        setTimeout(window.location.href = "/main/main.html",500);
+                        setTimeout(window.location.href = "map-demo/main/main.html",500);
                     });
                 },
                 error:function (data){

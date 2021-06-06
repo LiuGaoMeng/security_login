@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=edge" />
+    <meta name="keywords" content="news" />
+    <meta name="description" content="news" />
+    <title>news</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <!--header-->
+    <div class="top_wrap">
+        <!--top index-->
+        <div class="top">
+            <span class="welcome">欢迎您访问唐山市典型生态修复网站！</span>
+            <div class="corner">
+                <a onclick=SetHome(this,window.location) title="设为首页" href="javascript:void(0);">设为首页</a>
+                <span>|</span>
+                <a onclick=addFavorite(window.location,document.title) title="添加收藏" href="javascript:void(0);">加入收藏</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--logo and nav-->
+    <div class="header_wrap">
+        <div class="header">
+            <a href="index.html" class="logo"><img src="images/绿色矿山.jpg" /></a>
+            <div class="nav_list">
+                <ul id="nav" class="nav clearfix">
+                    <li class="nLi" style="display: none;"></li>
+                    <!-- <li class="nLi">
+                        <h3><a href="../bishe/signin.html">系统登录</a></h3>
+                        <ul class="sub">
+                            <li><a href="../bishe/signin.html">用户登录</a></li>
+                            <li><a href="../bishe/signin.html">用户注册</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nLi">
+                        <h3><a href="serve.html">生态修复模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/fourPeriodsLandUse.html">土地利用演变</a></li>
+                            <li>
+                                <a href="../georev/grabs.html">土壤裸露度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/fvc.html">植被覆盖度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/wet.html">地面湿润度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/lst.html">陆地地表温度对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/bp.html">空气质量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/io.html">铁矿石含量对比</a>
+                            </li>
+                            <li>
+                                <a href="../georev/2018jian2000.html">总体修复效果</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="study.html">生态评价模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geocom/2000resi.html">2000年评价结果</a></li>
+                            <li>
+                                <a href="../geocom/2018resi.html">2018年评价结果</a>
+                            </li>
+                            <!-- <li>
+                                <a href="../bishe/地面湿润度图表.html">草图绘制</a>
+                            </li>
+                            <li>
+                                <a href="../bishe/地面湿润度图表.html">点位转换</a>
+                            </li> -->
+                            <!-- <li>
+                                <a href="../bishe/陆地地表温度变化.html"></a>
+                            </li> -->
+                            <!-- <li><a href="../bishe/空气质量图表.html">空气质量变化统计</a></li>
+                            <li><a href="../bishe/铁矿石含量图表.html">铁矿石含量统计</a></li>
+                            <li><a href="../bishe/裸露度图表.html">土壤裸露度统计</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <h3><a href="serve.html">地图功能模块</a></h3>
+                        <ul class="sub">
+                            <li><a href="../geoanys/measureMiningArea.html">矿区测量</a></li>
+                            <li><a href="../geoanys/search.html">矿区属性查询</a></li>
+                            <li><a href="../geoanys/sketchSnappingMagnifier.html">草图绘制</a></li>
+                            <li><a href="../geoanys/widgetsCoordinateconversion.html">点位转换</a></li>
+                        </ul>
+                    </li>
+                    <li class="nLi">
+                        <!-- <h3><a href="resource.html">生态评价模块</a></h3> -->
+                        <ul class="sub">
+                            <!-- <li>
+                                <a href="resource.html"></a>
+                            </li> -->
+                            <!-- <li><a href="resource.html">法文类</a></li>
+                            <li><a href="resource.html">其他</a></li>
+                            <li><a href="resource.html">探秘天下</a></li> -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--banner-->
+    <!--<div class="i_banner">
+			<img src="images/banner1.jpg" />
+		</div>-->
+    <!--content-->
+    <div class="i_content">
+        <div class="adr_wrap">
+            <div class="adr">
+                <span class="adr_link"><a href="index.html">首   页</a>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;矿区概貌&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;秦家峪锰矿简介</span>
+            </div>
+        </div>
+        <div class="c_area">
+            <div class="left_list">
+                <div class="nav_title">矿区概貌</div>
+                <div class="sidemenu">
+                    <ul>
+                        <li class="on"><a href="secret.html">秦家峪锰矿简介</a></li>
+                        <!-- <li><a href="secret.html">2015国际秘书节</a></li> -->
+                    </ul>
+                </div>
+                <div class="contact">
+                    <a href="contact.html"><img src="images/tel.jpg" /></a>
+                </div>
+            </div>
+            <div class="right_content">
+                <div class="con_title">秦家峪矿区简介</div>
+                <div class="con_box">
+                    <p>迁西县锰资源储量丰富，资源优势明显，秦家峪锰矿区西起遵化市姚家峪，东至迁西县照燕州，面积为21.66平方公里。本次详查是受河北恒基锰业有限公司委托，在2003年普查和2011年秦家峪矿段详查工作的基础上进行的，地表用探槽、深部用钻探工程控制矿体，共施工钻孔58个，完成钻探进尺15476米。经过一年多的勘查，发现了长约1万米、平均厚度达8.16米的大规模矿体，探获锰矿资源量6865.79万吨；氧化矿平均品位为13.89%，原生矿平均品位为11.29%。本次勘查成果在选矿试验中生产电解金属锰获得巨大成功，将使恒基锰业收益超过137亿元。
+                    </p>
+
+
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!--footer-->
+    <div class="footer_wrap">
+        <div class="line"></div>
+        <div class="footer">
+            <div class="f_left">
+                <img src="images/红色矿山.png" class="f_logo" />
+                <div class="contact">
+                    <p><a href="contact.html">联系我们</a><a href="javascrip:void(0);">站长统计</a></p>
+                    <!-- <p>XX校区&nbsp;&nbsp;&nbsp;&nbsp;所在地址：XXXXXXXXXXXX</p> -->
+                    <p>版权所有： 唐山市自然资源与规划局&nbsp;&nbsp;&nbsp;&nbsp;电话：0315-5266600&nbsp;&nbsp;&nbsp;&nbsp;邮编：063000</p>
+                </div>
+            </div>
+            <div class="f_right">
+                <p><a href="http://zygh.tangshan.gov.cn/" style="text-decoration: underline;">唐山市自然资源与规划局官网入口</a></p>
+                <p>
+                    <a href=""></a>
+                </p>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</body>
+
+</html>
